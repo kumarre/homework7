@@ -19,12 +19,7 @@ function gettingJSON(){
         let item1 = loc_array[0].toLowerCase();
         // console.log("item 1 is: "+item1);
 
-<<<<<<< Updated upstream
-    //Create and set variables for each of the elements you
-    //need to update, location, temp, the image, etc.
-=======
         let item2 = loc_array[1].toLowerCase();
->>>>>>> Stashed changes
 
         item2 = item2.trim();
 
