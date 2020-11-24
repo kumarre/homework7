@@ -12,6 +12,7 @@ function gettingJSON(){
         if (location.length == 0) {
             location = "ann arbor, us";
         }
+        
         console.log("Location is : " + location);
 
         let loc_array = location.split(",");
@@ -38,17 +39,17 @@ function gettingJSON(){
         //set the query  
         let query;
         // Your code here.
-        let api =  "cbdfac893fa4a8707a6ce38a25f57314";
+        let appid =  "cbdfac893fa4a8707a6ce38a25f57314";
 
         console.log("item1 is city name: " + isNaN(item1));
         if (isNaN(item1)) {
             //city name
-            query = 'https://api.openweathermap.org/data/2.5/weather?q='+item1+','+item2+'&units='+format+'&appid='+api;
+            query = 'https://api.openweathermap.org/data/2.5/weather?q='+item1+','+item2+'&units='+format+'&appid='+appid;
 
         }
         else {
             //zip code
-            query = 'https://api.openweathermap.org/data/2.5/weather?zip='+item1+','+item2+'&units='+format+'&appid='+api;        
+            query = 'https://api.openweathermap.org/data/2.5/weather?zip='+item1+','+item2+'&units='+format+'&appid='+appid;        
         }
 
         console.log("Query is :" + query);
@@ -58,6 +59,7 @@ function gettingJSON(){
 
         let loc;
         let temp;
+        let description;
         let tempImg;
         // Your code here.
         $.getJSON(query,function(json){
@@ -65,19 +67,24 @@ function gettingJSON(){
             // elements in HTML.  
             // I would print the JSON to the console
             // Your code here.
+            loc = json["name"];
+            temp = json["main"]["temp"];
+            description = json["weather"][0]["description"];
+            tempImg = "http://openweathermap.org/img/wn/"+json["weather"][0]["icon"]+"@2x.png";
+
             console.log(JSON.stringify(json));
             // Change the div with the weather information so that it is now visible.
             document.querySelector("#forecast").style["display"] = "block";
             // Update the value for the location.  You should show the CITY name, even if the zip code is entered.
-            document.querySelector("#loc").innerHTML = json["name"];
+            document.querySelector("#loc").innerHTML = loc;
 
             // Update the value for the temperature and weather conditions.
-            document.querySelector("#temp").innerHTML = json["main"]["temp"] + " with " + json["weather"][0]["description"];
+            document.querySelector("#temp").innerHTML = temp + " with " + description;
 
             // Update the value for the weather icon, making sure to include the alt text.
-            document.querySelector("#tempImg").src = "http://openweathermap.org/img/wn/"+json["weather"][0]["icon"]+"@2x.png";
-            document.querySelector("#tempImg").title = json["weather"][0]["description"];
-            document.querySelector("#tempImg").alt = json["weather"][0]["description"];
+            document.querySelector("#tempImg").src = tempImg;
+            document.querySelector("#tempImg").title = description;
+            document.querySelector("#tempImg").alt = description;
         });
     })
 }
